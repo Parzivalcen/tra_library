@@ -69,9 +69,17 @@ class Store {
     Check if there is an item call books in LS. 
     IF there is not, we create one.
     */
+    if (localStorage.getItem('books') === null){
+      books = [];
+    }else{
+      books = JSON.parse(localStorage.getItem('books'));
+    }
   }
 
-  static addBook(book) {}
+  static addBook(book) {
+    const books = Store.getBooks();
+    books.push(book);
+  }
 
   static removeBook(isbn) {}
 }
@@ -100,6 +108,9 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
     UI.showAlert("Book added Correctly", "success");
     // Clear Fields
     UI.clearFields();
+
+    // add Books to LOCAL STORAGE 
+    Store.addBook(book);
   }
 });
 // Envent: remove book.
