@@ -43,6 +43,33 @@ class UI {
     // add table row to the table
     list.appendChild(row);
   }
+
+  // Show Alert
+  static showAlert(message, className) {
+    const div = document.createElement("div"); // message div
+    div.className = `alert alert-${className}`;
+    div.innerHTML = `${message}`;
+    const container = document.querySelector(".container");
+    const form = document.querySelector("#book-form");
+    container.insertBefore(div, form);
+    // Dissapearing time for alert
+    // setTimeOut takes two arguments
+    setTimeout(() => document.querySelector(".alert").remove(), 3000);
+  }
+
+  // Clear form
+  static clearFields() {
+    document.querySelector("#title").value = "";
+    document.querySelector("#author").value = "";
+    document.querySelector("#isbn").value = "";
+  }
+
+  // Delete Books
+  static deleteBooks(el) {
+    if (el.classList.contains("delete")) {
+      el.parentElement.parentElement.remove();
+    }
+  }
 }
 
 // Store Class: handle storage
@@ -59,10 +86,22 @@ document.querySelector("#book-form").addEventListener("submit", (e) => {
   const author = document.querySelector("#author").value;
   const isbn = document.querySelector("#isbn").value;
 
-  // Instantiate new book object
-  const book = new Book(title, author, isbn);
-  console.log(book);
-  // ADD  Book to UI
-  UI.addBookToList(book);
+  // Validate, if one of the fields are empty
+  if (title === "" || author === "" || isbn === "") {
+    UI.showAlert("Please fill all the Fields", "danger");
+  } else {
+    // Instantiate new book object
+    const book = new Book(title, author, isbn);
+    console.log(book);
+    // ADD  Book to UI
+    UI.addBookToList(book);
+    UI.showAlert("Book added Correctly", "success");
+    // Clear Fields
+    UI.clearFields();
+  }
 });
 // Envent: remove book.
+document.querySelector("#book-list").addEventListener("click", (e) => {
+  UI.deleteBooks(e.target);
+  UI.showAlert("Book Deleted", "info");
+});
