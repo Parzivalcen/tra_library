@@ -11,18 +11,7 @@ class Book {
 class UI {
   static displayBooks() {
     // books array
-    const storedBooks = [
-      {
-        title: "The war of Art",
-        author: "Steven Pressfield",
-        isbn: "332215",
-      },
-      {
-        title: "The war of Art",
-        author: "Steven Pressfield",
-        isbn: "332215",
-      },
-    ];
+    const storedBooks = [];
 
     const books = storedBooks;
     // loop throught the list of books
@@ -73,6 +62,19 @@ class UI {
 }
 
 // Store Class: handle storage
+class Store {
+  static getBooks() {
+    let books;
+    /*
+    Check if there is an item call books in LS. 
+    IF there is not, we create one.
+    */
+  }
+
+  static addBook(book) {}
+
+  static removeBook(isbn) {}
+}
 
 // Event: Display Books
 document.addEventListener("DOMContentLoaded", UI.displayBooks);
